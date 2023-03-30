@@ -46,3 +46,9 @@ while jugador.esta_vivo():
 
 print(f"El jugador {jugador.nombre} ha muerto")
 
+# EJERCICIO:
+# Modificar este programa para agregar las siguientes caracteristicas:
+# 1. Agregar logica de daño aleatorio al enemigo.
+# 2. Agregar lógica de contraataque del jugador.
+# 3. Agregar posibilidad de daño crítico en contra ataque del jugador.
+
