@@ -17,10 +17,10 @@ class BresenhamWindow(arcade.Window):
     def on_draw(self):
         arcade.start_render()
 
-        points = get_line(0, 30, 20, 10)
+        points = get_line(30, 15, 5, 5)
         self.draw_grid()
         self.draw_line_points(points, arcade.color.AZURE_MIST)
-        self.draw_scaled_line(0, 30, 20, 10)
+        self.draw_scaled_line(30, 15, 5, 5)
 
     def draw_grid(self):
         # lineas verticales

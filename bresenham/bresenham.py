@@ -6,6 +6,11 @@ def get_line(x0, y0, x1, y1):
     # variables para iterar xk, yk
     xk = x0
     yk = y0
+    y_inc = 1
+
+    if dy < 0:
+        dy = -1 * dy
+        y_inc = -1
 
     # 2do paso: parametro de decision Pk
     Pk = 2 * dy - dx
@@ -20,7 +25,7 @@ def get_line(x0, y0, x1, y1):
             Pk += 2 * dy
         else:
             Pk += 2 * dy - 2 * dx
-            yk += 1
+            yk += y_inc
     
     return points
 
