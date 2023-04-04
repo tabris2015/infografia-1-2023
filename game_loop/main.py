@@ -14,6 +14,7 @@ class App(arcade.Window):
         self.py = SCREEN_HEIGHT / 2 # comienza en el centro de la pantalla
         self.movement = 5
         self.points = []
+        self.score = 0
 
     def on_key_press(self, symbol: int, modifiers: int):
         """Metodo para detectar teclas que han sido presionada
@@ -52,7 +53,9 @@ class App(arcade.Window):
         """Metodo para actualizar objetos de la app"""
         colision = self.player_is_on_food()
         if colision != -1:
-            print(f"Colision con el punto {colision}: {self.points[colision]}")
+            self.points.pop(colision)
+            self.score += 1
+            print(f"ñom ñom, Score: {self.score}")
 
     def player_is_on_food(self):
         """Funcion que detecta si el jugador ha colisionado
@@ -69,6 +72,9 @@ class App(arcade.Window):
         jugador colisiona con punto en (6, 7): retornar 1
         jugador no colisiona con ningun punto: retornar -1
         """
+        for i, p in enumerate(self.points):
+            if abs(self.px - p[0]) < 7 and abs(self.py - p[1]) < 7:
+                return i
         return -1
 
     def on_draw(self):
@@ -77,6 +83,25 @@ class App(arcade.Window):
         arcade.draw_point(self.px, self.py, arcade.color.RED, 10)
         if self.points:
             arcade.draw_points(self.points, arcade.color.GREEN, 5)
+
+        arcade.draw_text(
+            "Come todos los puntos verdes!",
+            300,
+            770,
+            arcade.color.YELLOW,
+            15,
+            width=SCREEN_WIDTH,
+            align="left"
+        )
+        arcade.draw_text(
+            f"Score: {self.score}",
+            700,
+            35,
+            arcade.color.YELLOW,
+            15,
+            width=SCREEN_WIDTH,
+            align="left"
+        )
 
 
 if __name__ == "__main__":
