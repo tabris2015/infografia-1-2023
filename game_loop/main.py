@@ -50,7 +50,9 @@ class App(arcade.Window):
 
     def on_update(self, delta_time: float):
         """Metodo para actualizar objetos de la app"""
-        print(f"{1/delta_time}")
+        colision = self.player_is_on_food()
+        if colision != -1:
+            print(f"Colision con el punto {colision}: {self.points[colision]}")
 
     def player_is_on_food(self):
         """Funcion que detecta si el jugador ha colisionado
