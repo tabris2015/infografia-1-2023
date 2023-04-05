@@ -29,6 +29,15 @@ class Polygon:
         new_vertices = [(nv[0], nv[1]) for nv in new_matrix2]
         # 4. Reasignar nuevos vertices
         self.vertices = new_vertices
+
+    def translate(self, dx, dy):
+        pass
+    
+    def rotate(self, theta):
+        pass
+    
+    def scale(self, sx, sy):
+        pass
     
 
 
