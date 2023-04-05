@@ -1,4 +1,5 @@
 import arcade
+import numpy as np
 from polygon import Polygon
 
 # definicion de constantes
@@ -19,7 +20,13 @@ class TransformWindow(arcade.Window):
     
     def on_key_press(self, symbol: int, modifiers: int):
         if symbol == arcade.key.UP:
-            self.polygon.move(0, 5)
+            Tr = np.array([
+                [1, 0, 0], 
+                [0, 1, 5], 
+                [0, 0, 1]
+            ])
+            self.polygon.transform(Tr)
+            # self.polygon.move(0, 5)
     
 
 def main():
