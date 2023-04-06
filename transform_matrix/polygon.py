@@ -31,21 +31,48 @@ class Polygon:
         self.vertices = new_vertices
 
     def translate(self, dx, dy):
-        pass
+        trf = np.array([
+            [1, 0, dx],
+            [0, 1, dy],
+            [0, 0, 1]
+        ])
+        self.transform(trf)
     
     def rotate(self, theta):
-        pass
+        vert_array = np.array(self.vertices)
+        center = np.sum(vert_array, axis=0) / vert_array.shape[0]
+        # M1
+        to_origin_trf = np.array([
+            [1, 0, -center[0]],
+            [0, 1, -center[1]],
+            [0, 0, 1]
+        ])
+        # M2
+        rotation_trf = np.array([
+            [np.cos(np.radians(theta)), -np.sin(np.radians(theta)), 0],
+            [np.sin(np.radians(theta)), np.cos(np.radians(theta)), 0],
+            [0, 0, 1]
+        ])
+        # M3
+        from_origin_trf = np.array([
+            [1, 0, center[0]],
+            [0, 1, center[1]],
+            [0, 0, 1]
+        ])
+        #                          <------------------------<---------------<-----                                             
+        #                          M3                       M2              M1
+        self.transform(np.dot(from_origin_trf, np.dot(rotation_trf, to_origin_trf)))
     
     def scale(self, sx, sy):
-        pass
+        trf = np.array([
+            [sx, 0, 0],
+            [0, sy, 0],
+            [0, 0, 1]
+        ])
+        self.transform(trf)
     
 
 
 if __name__ == "__main__":
     p = Polygon([(40, 40), (200, 40), (120, 300)])
-    Tr = np.array([
-        [1, 0, 100], 
-        [0, 1, 100], 
-        [0, 0, 1]
-    ])
-    p.transform(Tr)
+    p.rotate(5)

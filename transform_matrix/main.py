@@ -20,13 +20,21 @@ class TransformWindow(arcade.Window):
     
     def on_key_press(self, symbol: int, modifiers: int):
         if symbol == arcade.key.UP:
-            Tr = np.array([
-                [1, 0, 0], 
-                [0, 1, 5], 
-                [0, 0, 1]
-            ])
-            self.polygon.transform(Tr)
-            # self.polygon.move(0, 5)
+            self.polygon.translate(0, 5)
+        if symbol == arcade.key.DOWN:
+            self.polygon.translate(0, -5)
+        if symbol == arcade.key.LEFT:
+            self.polygon.translate(-5, 0)
+        if symbol == arcade.key.RIGHT:
+            self.polygon.translate(5, 0)
+        if symbol == arcade.key.E:
+            self.polygon.rotate(5)
+        if symbol == arcade.key.Q:
+            self.polygon.rotate(-5)
+        if symbol == arcade.key.Y:
+            self.polygon.scale(1.2, 1.2)
+        if symbol == arcade.key.H:
+            self.polygon.scale(0.9, 0.9)
     
 
 def main():
