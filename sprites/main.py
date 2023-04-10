@@ -2,11 +2,12 @@ import math
 import random
 
 import arcade
+from game_object import Player
 
 # definicion de constantes
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 800
-SCREEN_TITLE = "Lineas con bresenham"
+SCREEN_TITLE = "Tank"
 SCALING = 0.5
 SPEED = 5
 BULLET_SPEED = 15
@@ -17,17 +18,11 @@ class App(arcade.Window):
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
         arcade.set_background_color(arcade.color.DARK_GREEN)
         self.sprites = arcade.SpriteList()
-        self.player = arcade.Sprite("img/tank.gif", SCALING)
-        self.player.center_x = SCREEN_WIDTH / 2
-        self.player.center_y = SCREEN_HEIGHT / 2
-
+        self.player = Player("img/tank.gif", SCALING, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
         self.sprites.append(self.player)
-        self.player_speed = 0
         self.bullets = arcade.SpriteList()
         self.enemies = arcade.SpriteList()
-
         self.score = 0
-
         arcade.schedule(self.add_enemy, 2.0)
 
     def on_key_press(self, symbol: int, modifiers: int):
@@ -38,9 +33,9 @@ class App(arcade.Window):
             modifiers: modificadores presionados
         """
         if symbol == arcade.key.UP:
-            self.player_speed = SPEED
+            self.player.speed = SPEED
         if symbol == arcade.key.DOWN:
-            self.player_speed = -SPEED
+            self.player.speed = -SPEED
 
         if symbol == arcade.key.LEFT:
             self.player.change_angle = 5
@@ -64,14 +59,12 @@ class App(arcade.Window):
 
     def on_key_release(self, symbol: int, modifiers: int):
         if symbol in (arcade.key.UP, arcade.key.DOWN):
-            self.player_speed = 0
+            self.player.speed = 0
         if symbol in (arcade.key.LEFT, arcade.key.RIGHT):
             self.player.change_angle = 0
 
     def on_update(self, delta_time: float):
         """Metodo para actualizar objetos de la app"""
-        self.player.center_x += -self.player_speed * math.sin(math.radians(self.player.angle))
-        self.player.center_y += self.player_speed * math.cos(math.radians(self.player.angle))
         self.update_bullets()
         self.update_enemies()
         self.sprites.update()
