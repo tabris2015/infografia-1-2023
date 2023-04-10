@@ -4,6 +4,9 @@ import numpy as np
 class Polygon:
     def __init__(self, vertices, color=arcade.color.RED):
         self.vertices = vertices # [(x, y), ...]
+        self.x = 0
+        self.y = 0
+        self.theta = 0
         self.color = color
         self.line_width = 4
 
@@ -13,10 +16,6 @@ class Polygon:
             self.color,
             4
         )
-    
-    def move(self, dx: int, dy:int):
-        for i, v in enumerate(self.vertices):
-            self.vertices[i] = (v[0] + dx, v[1] + dy)
 
     def transform(self, t_matrix):
         # 1. Convertir vertices a una matrix de (3, n)
@@ -31,6 +30,10 @@ class Polygon:
         self.vertices = new_vertices
 
     def translate(self, dx, dy):
+        vert_array = np.array(self.vertices)
+        center = np.sum(vert_array, axis=0) / vert_array.shape[0]
+        self.x = center[0]
+        self.y = center[1]
         trf = np.array([
             [1, 0, dx],
             [0, 1, dy],
@@ -38,9 +41,12 @@ class Polygon:
         ])
         self.transform(trf)
     
-    def rotate(self, theta):
+    def rotate(self, dtheta):
+        self.theta += dtheta
         vert_array = np.array(self.vertices)
         center = np.sum(vert_array, axis=0) / vert_array.shape[0]
+        self.x = center[0]
+        self.y = center[1]
         # M1
         to_origin_trf = np.array([
             [1, 0, -center[0]],
@@ -49,8 +55,8 @@ class Polygon:
         ])
         # M2
         rotation_trf = np.array([
-            [np.cos(np.radians(theta)), -np.sin(np.radians(theta)), 0],
-            [np.sin(np.radians(theta)), np.cos(np.radians(theta)), 0],
+            [np.cos(np.radians(dtheta)), -np.sin(np.radians(dtheta)), 0],
+            [np.sin(np.radians(dtheta)), np.cos(np.radians(dtheta)), 0],
             [0, 0, 1]
         ])
         # M3
