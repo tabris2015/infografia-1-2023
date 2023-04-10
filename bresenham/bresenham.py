@@ -1,33 +1,56 @@
-def get_line(x0, y0, x1, y1):
-    points = [] # lista para almacenar puntos generados
-    # 1er paso: dx, dy
+def get_line_small(x0, y0, x1, y1):
+    points = []
     dx = x1 - x0
     dy = y1 - y0
-    # variables para iterar xk, yk
     xk = x0
     yk = y0
     y_inc = 1
-
     if dy < 0:
-        dy = -1 * dy
         y_inc = -1
-
-    # 2do paso: parametro de decision Pk
+        dy = -1 * dy
     Pk = 2 * dy - dx
-
-    # 3er paso: iterar hasta el punto final:
     while xk <= x1:
-        # agregar punto a la lista
         points.append((xk, yk))
         xk += 1
-        # decido en base a Pk si y incrementa o no
         if Pk < 0:
-            Pk += 2 * dy
+            Pk = Pk + 2 * dy
         else:
-            Pk += 2 * dy - 2 * dx
+            Pk = Pk + 2 * dy - 2 * dx
             yk += y_inc
-    
     return points
 
+
+def get_line_big(x0, y0, x1, y1):
+    points = []
+    dx = x1 - x0
+    dy = y1 - y0
+    xk = x0
+    yk = y0
+    x_inc = 1
+    if dx < 0:
+        x_inc = -1
+        dx = -1 * dx
+    Pk = 2 * dx - dy
+    while yk <= y1:
+        points.append((xk, yk))
+        yk += 1
+        if Pk < 0:
+            Pk = Pk + 2 * dx
+        else:
+            Pk = Pk + 2 * dx - 2 * dy
+            xk += x_inc
+    return points
+
+
+def get_line(x0, y0, x1, y1):
+    dx = x1 - x0
+    dy = y1 - y0
+    if abs(dy) > abs(dx):
+        # pendiente > 1
+        return get_line_big(x0, y0, x1, y1)
+    else:
+        return get_line_small(x0, y0, x1, y1)
+
+
 if __name__ == "__main__":
-    print(get_line(0, 3, 6, 5))
+    print(get_line(0, 0, 7, 2))
