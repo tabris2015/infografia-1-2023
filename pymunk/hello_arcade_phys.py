@@ -14,6 +14,11 @@ class Mario(arcade.Sprite):
         super().__init__(image, scale, center_x=center_x, center_y=center_y)
         self.shape = shape
 
+    def update(self):
+        self.center_x = self.shape.body.position.x
+        self.center_y = self.shape.body.position.y
+        self.angle = math.degrees(self.shape.body.angle)
+
 
 class App(arcade.Window):
     def __init__(self):
@@ -44,16 +49,10 @@ class App(arcade.Window):
 
     def on_update(self, delta_time: float):
         self.space.step(1 / 60.0)   # actualiza la simulacion de las fisicas
-        for sprite in self.sprites:
-            sprite.center_x = sprite.shape.body.position.x
-            sprite.center_y = sprite.shape.body.position.y
-            sprite.angle = math.degrees(sprite.shape.body.angle)
-
         self.sprites.update()
 
     def on_draw(self):
         arcade.start_render()
-        self.clear()
         self.sprites.draw()
 
 
