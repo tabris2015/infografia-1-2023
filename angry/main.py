@@ -24,11 +24,13 @@ class App(arcade.Window):
         floor_shape.friction = 10
         self.space.add(floor_body, floor_shape)
 
-        self.bird = Bird("assets/img/red-bird3.png", 0, 0, WIDTH / 2, HEIGHT / 2, self.space)
-
         self.sprites = arcade.SpriteList()
-        self.sprites.append(self.bird)
         self.add_columns()
+
+        self.start_point = ()
+        self.end_point = ()
+        self.distance = 0
+        self.draw_line = False
 
     def add_columns(self):
         for x in range(WIDTH // 2, WIDTH, 50):
@@ -39,14 +41,42 @@ class App(arcade.Window):
         self.space.step(1 / 60.0)   # actualiza la simulacion de las fisicas
         self.sprites.update()
 
+    def on_mouse_press(self, x, y, button, modifiers):
+        if button == arcade.MOUSE_BUTTON_LEFT:
+            print("clic")
+            self.start_point = (x, y)
+            self.end_point = (x, y)
+            self.draw_line = True
+
+    def on_mouse_drag(self, x: int, y: int, dx: int, dy: int, buttons: int, modifiers: int):
+        if buttons == arcade.MOUSE_BUTTON_LEFT:
+            self.end_point = (x, y)
+
+    def on_mouse_release(self, x: int, y: int, button: int, modifiers: int):
+        if button == arcade.MOUSE_BUTTON_LEFT:
+            print("release")
+            self.draw_line = False
+            angle = -arcade.get_angle_radians(
+                self.start_point[0],
+                self.start_point[1],
+                self.end_point[0],
+                self.end_point[1],
+            ) - math.pi / 2
+            self.distance = arcade.get_distance(
+                self.start_point[0],
+                self.start_point[1],
+                self.end_point[0],
+                self.end_point[1],
+            )
+            print(angle, self.distance)
+            bird = Bird("assets/img/red-bird3.png", self.distance, angle, x, y, self.space)
+            self.sprites.append(bird)
+
     def on_draw(self):
         arcade.start_render()
         self.sprites.draw()
-
-    def on_mouse_press(self, x: int, y: int, button: int, modifiers: int):
-        if button == arcade.MOUSE_BUTTON_LEFT:
-            bird = Bird("assets/img/red-bird3.png", 50, math.radians(45), x, y, self.space)
-            self.sprites.append(bird)
+        if self.draw_line:
+            arcade.draw_line(self.start_point[0], self.start_point[1], self.end_point[0], self.end_point[1], arcade.color.BLACK, 3)
 
 
 def main():
