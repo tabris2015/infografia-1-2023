@@ -31,7 +31,7 @@ class Bird(arcade.Sprite):
         self.angle = math.degrees(self.shape.body.angle)
 
 
-class Column(arcade.Sprite):
+class PassiveObject(arcade.Sprite):
     def __init__(self, image: str, x: float, y: float, space: pymunk.Space):
         super().__init__(image, 1)
         mass = 2
@@ -39,6 +39,31 @@ class Column(arcade.Sprite):
         body = pymunk.Body(mass, moment)
         body.position = (x, y)
         shape = pymunk.Poly.create_box(body, (self.width, self.height))
+        shape.elasticity = 0.8
+        shape.friction = 0.4
+        space.add(body, shape)
+        self.body = body
+        self.shape = shape
+
+    def update(self):
+        self.center_x = self.shape.body.position.x
+        self.center_y = self.shape.body.position.y
+        self.angle = math.degrees(self.shape.body.angle)
+
+
+class Column(PassiveObject):
+    def __init__(self, x, y, space):
+        super().__init__("assets/img/column.png", x, y, space)
+
+
+class Pig(arcade.Sprite):
+    def __init__(self, x: float, y: float, space: pymunk.Space):
+        super().__init__("assets/img/pig_failed.png", 0.1)
+        mass = 2
+        moment = pymunk.moment_for_circle(mass, 0, self.width / 2 - 3)
+        body = pymunk.Body(mass, moment)
+        body.position = (x, y)
+        shape = pymunk.Circle(body, self.width / 2 - 3)
         shape.elasticity = 0.8
         shape.friction = 0.4
         space.add(body, shape)

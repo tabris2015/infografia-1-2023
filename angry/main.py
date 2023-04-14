@@ -3,9 +3,9 @@ import math
 import arcade
 import pymunk
 
-from game_object import Bird, Column
+from game_object import Bird, Column, Pig
 
-WIDTH = 800
+WIDTH = 1800
 HEIGHT = 800
 TITLE = "Angry birds"
 
@@ -26,6 +26,7 @@ class App(arcade.Window):
 
         self.sprites = arcade.SpriteList()
         self.add_columns()
+        self.add_pigs()
 
         self.start_point = ()
         self.end_point = ()
@@ -34,8 +35,12 @@ class App(arcade.Window):
 
     def add_columns(self):
         for x in range(WIDTH // 2, WIDTH, 50):
-            column = Column("assets/img/column.png", x, 100, self.space)
+            column = Column(x, 100, self.space)
             self.sprites.append(column)
+
+    def add_pigs(self):
+        pig1 = Pig(WIDTH / 2, 100, self.space)
+        self.sprites.append(pig1)
 
     def on_update(self, delta_time: float):
         self.space.step(1 / 60.0)   # actualiza la simulacion de las fisicas
