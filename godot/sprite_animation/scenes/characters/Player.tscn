@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://assets/sprites/player/Idle (1).png" type="Texture" id=1]
+[ext_resource path="res://scenes/characters/Player.gd" type="Script" id=2]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 36.0
@@ -69,6 +70,36 @@ tracks/4/keys = {
 "values": [ 0.0 ]
 }
 
+[sub_resource type="Animation" id=4]
+resource_name = "player_attack"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture:load_path")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ "res://.import/Attack (1).png-cb1993b385e41d386609f4eb99cfb992.stex", "res://.import/Attack (2).png-c411952b4f71674446d913920c3d49b1.stex", "res://.import/Attack (3).png-ce08e6121c1c1b0b9ad1e5dad569c7ec.stex", "res://.import/Attack (4).png-387fec03d7364a70353cffbd63311a76.stex", "res://.import/Attack (5).png-85832a320309691bf7008b7cb1aa1ce9.stex", "res://.import/Attack (6).png-03c928fe05f10e2d86af15ffd059bfee.stex", "res://.import/Attack (7).png-05bb4938498f4a910956277090929746.stex", "res://.import/Attack (8).png-3710335d8ae28db7e4ab3032a89ec15f.stex", "res://.import/Attack (9).png-a0ab40d1d98dfbd3dfb38bf592cdc88b.stex", "res://.import/Attack (10).png-57e92eb889bf24080ee621ab50409251.stex" ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "player_death"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture:load_path")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ "res://.import/Dead (1).png-cd7808748e72b5f7e73659eb0f188413.stex", "res://.import/Dead (2).png-1623c2028097fd97c8a0add20f257074.stex", "res://.import/Dead (3).png-90aa6978f2479873f1712a9ebba4fbf8.stex", "res://.import/Dead (4).png-608966496bda1862d5baa236910e9f69.stex", "res://.import/Dead (5).png-cb5561931df527a4ce75e3e283415856.stex", "res://.import/Dead (6).png-f64fd5d6e08db993e85b0a2c706846bc.stex", "res://.import/Dead (7).png-8c3d6cf82f227709fa4a57553fc29b91.stex", "res://.import/Dead (8).png-c488cdd56901b8d15388412d56187184.stex", "res://.import/Dead (9).png-c1cae33a79d2f5c6ca52f24e3b801ae3.stex", "res://.import/Dead (10).png-3ff13b91866b75c7426369dc4203b1db.stex" ]
+}
+
 [sub_resource type="Animation" id=3]
 resource_name = "player_idle"
 loop = true
@@ -86,6 +117,8 @@ tracks/0/keys = {
 }
 
 [node name="Player" type="KinematicBody2D"]
+position = Vector2( 235, 155 )
+script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.2, 0.2 )
@@ -96,4 +129,6 @@ shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 2 )
+anims/player_attack = SubResource( 4 )
+anims/player_death = SubResource( 5 )
 anims/player_idle = SubResource( 3 )
