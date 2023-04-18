@@ -13,6 +13,7 @@ class Bird(arcade.Sprite):
         moment = pymunk.moment_for_circle(mass, 0, radius)
         body = pymunk.Body(mass, moment)
         body.position = (x, y)
+        distance = 100 if distance >=100 else distance
         power = distance * 50
         impulse = power * pymunk.Vec2d(1, 0)
         body.apply_impulse_at_local_point(impulse.rotated(angle))
