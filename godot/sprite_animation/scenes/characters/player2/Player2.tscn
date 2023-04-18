@@ -462,7 +462,6 @@ height = 18.0
 radius = 15.5081
 
 [node name="Player2" type="KinematicBody2D"]
-position = Vector2( 457, 186 )
 scale = Vector2( 2, 2 )
 script = ExtResource( 2 )
 
@@ -517,6 +516,18 @@ collision_mask = 16
 position = Vector2( 28, 0 )
 shape = SubResource( 79 )
 disabled = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+zoom = Vector2( 0.4, 0.4 )
+smoothing_enabled = true
+smoothing_speed = 3.0
+drag_margin_left = 0.38
+drag_margin_right = 0.38
+editor_draw_limits = true
+editor_draw_drag_margin = true
+
+[connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]
 
 [editable path="HurtBox"]
 [editable path="Position2D/HitBox"]
