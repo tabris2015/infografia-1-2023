@@ -58,4 +58,4 @@ func _on_HurtBox_area_entered(area):
 	hp -= 1
 	if hp <= 0:
 		die = true
-	print(area)
+	print(area.collision_layer,"-",area.collision_mask)
