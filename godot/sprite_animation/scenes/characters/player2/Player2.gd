@@ -9,6 +9,7 @@ var velocity = Vector2.ZERO
 onready var state_machine = $AnimationTree.get("parameters/playback")
 var hurt = false
 var die = false
+var on_damage = false
 
 func _physics_process(delta):
 	var input_vector = Vector2.ZERO
@@ -36,12 +37,16 @@ func _physics_process(delta):
 	
 	if hurt:
 		state_machine.travel("hurt")
-		velocity = Vector2.ZERO
+		print("ouch")
+		#velocity = Vector2.ZERO
 		hurt = false
+	
+	
 	
 	if die:
 		state_machine.travel("death")
 		velocity = Vector2.ZERO
+		$DamageTimer.stop()
 		#hurt = false
 	
 	
@@ -54,19 +59,32 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity)
 
 
-func _on_HurtBox_area_entered(area):
+func take_damage():
 	hurt = true
 	hp -= 1
 	if hp <= 0:
 		die = true
+
+func _on_HurtBox_area_entered(area):
+	take_damage()
 	print(area.collision_layer,"-",area.collision_mask)
 
 
-
+# cada vez que colisione con una antorcha
 func _on_HurtBox_body_entered(body):
-	hurt = true
-	hp -= 1
-	if hp <= 0:
-		die = true
+	take_damage()
+	$DamageTimer.start()
 	print(body.collision_layer,"-",body.collision_mask)
 
+
+
+func _on_HurtBox_body_exited(body):
+	on_damage = false
+	$DamageTimer.stop()
+	$DamageTimer.one_shot = true
+
+
+func _on_DamageTimer_timeout():
+	take_damage()
+	print("sal de ahi")
+	

@@ -471,6 +471,7 @@ script = ExtResource( 2 )
 texture = ExtResource( 1 )
 hframes = 10
 vframes = 9
+frame = 11
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -1.49999, 18 )
@@ -529,8 +530,13 @@ drag_margin_right = 0.38
 editor_draw_limits = true
 editor_draw_drag_margin = true
 
+[node name="DamageTimer" type="Timer" parent="."]
+wait_time = 0.5
+
 [connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]
 [connection signal="body_entered" from="HurtBox" to="." method="_on_HurtBox_body_entered"]
+[connection signal="body_exited" from="HurtBox" to="." method="_on_HurtBox_body_exited"]
+[connection signal="timeout" from="DamageTimer" to="." method="_on_DamageTimer_timeout"]
 
 [editable path="HurtBox"]
 [editable path="Position2D/HitBox"]

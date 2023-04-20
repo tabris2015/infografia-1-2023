@@ -18,6 +18,9 @@ position = Vector2( 113, 366 )
 scale = Vector2( 1, 1 )
 z_index = 1
 
+[node name="Sprite" parent="Player2" index="0"]
+frame = 0
+
 [node name="AnimationTree" parent="Player2" index="3"]
 parameters/playback = SubResource( 1 )
 
