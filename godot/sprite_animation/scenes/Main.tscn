@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://scenes/characters/player2/Player2.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/characters/player2/HitBox.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/world/Enemy.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/world/World.tscn" type="PackedScene" id=5]
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=1]
 
@@ -13,12 +14,17 @@ extents = Vector2( 29.25, 30.5 )
 [node name="Main" type="Node2D"]
 
 [node name="Player2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 113, 366 )
+scale = Vector2( 1, 1 )
+z_index = 1
 
 [node name="AnimationTree" parent="Player2" index="3"]
 parameters/playback = SubResource( 1 )
 
 [node name="Enemy" parent="." instance=ExtResource( 4 )]
-position = Vector2( 204, 129 )
+position = Vector2( 320, 381 )
+scale = Vector2( 1, 1 )
+z_index = 1
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 202, 3 )
@@ -31,6 +37,8 @@ collision_mask = 4
 [node name="CollisionShape2D" parent="Sprite/HitBox" index="0"]
 position = Vector2( 0, -1 )
 shape = SubResource( 2 )
+
+[node name="World" parent="." instance=ExtResource( 5 )]
 
 [editable path="Player2"]
 [editable path="Player2/HurtBox"]

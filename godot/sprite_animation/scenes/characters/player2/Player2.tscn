@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=2]
+[gd_scene load_steps=60 format=2]
 
 [ext_resource path="res://assets/sprites/player2/HeroKnight.png" type="Texture" id=1]
 [ext_resource path="res://scenes/characters/player2/Player2.gd" type="Script" id=2]
@@ -421,6 +421,8 @@ auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=77]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=80]
+
 [sub_resource type="AnimationNodeStateMachine" id=42]
 states/attack1/node = SubResource( 44 )
 states/attack1/position = Vector2( 82, -96 )
@@ -439,7 +441,7 @@ states/death/position = Vector2( 510, 60 )
 states/fall/node = SubResource( 51 )
 states/fall/position = Vector2( 465, 224 )
 states/hurt/node = SubResource( 52 )
-states/hurt/position = Vector2( 126, 152 )
+states/hurt/position = Vector2( 112, 152 )
 states/idle/node = SubResource( 53 )
 states/idle/position = Vector2( 304, 47 )
 states/jump/node = SubResource( 54 )
@@ -448,7 +450,7 @@ states/roll/node = SubResource( 55 )
 states/roll/position = Vector2( 304, 259 )
 states/run/node = SubResource( 56 )
 states/run/position = Vector2( 304, 152 )
-transitions = [ "idle", "run", SubResource( 57 ), "run", "idle", SubResource( 58 ), "run", "roll", SubResource( 59 ), "roll", "run", SubResource( 60 ), "idle", "hurt", SubResource( 61 ), "hurt", "idle", SubResource( 62 ), "idle", "block_idle", SubResource( 63 ), "block_idle", "idle", SubResource( 64 ), "block_idle", "block", SubResource( 65 ), "block", "block_idle", SubResource( 66 ), "idle", "jump", SubResource( 67 ), "jump", "fall", SubResource( 68 ), "fall", "idle", SubResource( 69 ), "idle", "attack1", SubResource( 70 ), "attack1", "idle", SubResource( 71 ), "idle", "attack2", SubResource( 72 ), "attack2", "attack3", SubResource( 73 ), "attack3", "idle", SubResource( 74 ), "idle", "attack_critic", SubResource( 75 ), "attack_critic", "idle", SubResource( 76 ), "idle", "death", SubResource( 77 ) ]
+transitions = [ "idle", "run", SubResource( 57 ), "run", "idle", SubResource( 58 ), "run", "roll", SubResource( 59 ), "roll", "run", SubResource( 60 ), "idle", "hurt", SubResource( 61 ), "hurt", "idle", SubResource( 62 ), "idle", "block_idle", SubResource( 63 ), "block_idle", "idle", SubResource( 64 ), "block_idle", "block", SubResource( 65 ), "block", "block_idle", SubResource( 66 ), "idle", "jump", SubResource( 67 ), "jump", "fall", SubResource( 68 ), "fall", "idle", SubResource( 69 ), "idle", "attack1", SubResource( 70 ), "attack1", "idle", SubResource( 71 ), "idle", "attack2", SubResource( 72 ), "attack2", "attack3", SubResource( 73 ), "attack3", "idle", SubResource( 74 ), "idle", "attack_critic", SubResource( 75 ), "attack_critic", "idle", SubResource( 76 ), "idle", "death", SubResource( 77 ), "run", "hurt", SubResource( 80 ) ]
 start_node = "idle"
 end_node = "death"
 graph_offset = Vector2( -241, -146 )
@@ -528,6 +530,7 @@ editor_draw_limits = true
 editor_draw_drag_margin = true
 
 [connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]
+[connection signal="body_entered" from="HurtBox" to="." method="_on_HurtBox_body_entered"]
 
 [editable path="HurtBox"]
 [editable path="Position2D/HitBox"]

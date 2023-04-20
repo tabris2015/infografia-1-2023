@@ -36,6 +36,7 @@ func _physics_process(delta):
 	
 	if hurt:
 		state_machine.travel("hurt")
+		velocity = Vector2.ZERO
 		hurt = false
 	
 	if die:
@@ -59,3 +60,13 @@ func _on_HurtBox_area_entered(area):
 	if hp <= 0:
 		die = true
 	print(area.collision_layer,"-",area.collision_mask)
+
+
+
+func _on_HurtBox_body_entered(body):
+	hurt = true
+	hp -= 1
+	if hp <= 0:
+		die = true
+	print(body.collision_layer,"-",body.collision_mask)
+
