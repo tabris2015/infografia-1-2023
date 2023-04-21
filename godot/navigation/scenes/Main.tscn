@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/Main.gd" type="Script" id=1]
+[ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
+
+[sub_resource type="NavigationPolygon" id=1]
+vertices = PoolVector2Array( 154, 149, 37, 22, 444, 52, 241, 326, 220, 542, 28, 583, 63, 199, 367, 336, 512, 200, 477, 266, 695, 273, 971, 288, 981, 570, 629, 549, 620, 448, 545, 445, 830, 20, 976, 26, 963, 183, 735, 160, 601, 149, 363, 560, 538, 559 )
+polygons = [ PoolIntArray( 0, 1, 2 ), PoolIntArray( 3, 4, 5, 6, 0 ), PoolIntArray( 7, 3, 0, 2, 8, 9 ), PoolIntArray( 10, 11, 12, 13, 14 ), PoolIntArray( 9, 10, 14, 15, 7 ), PoolIntArray( 16, 17, 18, 19, 2 ), PoolIntArray( 2, 19, 20 ), PoolIntArray( 2, 20, 8 ), PoolIntArray( 21, 7, 15, 22 ) ]
+outlines = [ PoolVector2Array( 37, 22, 444, 52, 830, 20, 976, 26, 963, 183, 735, 160, 601, 149, 512, 200, 477, 266, 695, 273, 971, 288, 981, 570, 629, 549, 620, 448, 545, 445, 538, 559, 363, 560, 367, 336, 241, 326, 220, 542, 28, 583, 63, 199, 154, 149 ) ]
+
+[node name="Main" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Navigation2D" type="Navigation2D" parent="."]
+
+[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Navigation2D"]
+navpoly = SubResource( 1 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+
+[connection signal="send_path" from="." to="Player" method="_on_Main_send_path"]
+[connection signal="compute_path" from="Player" to="." method="_on_Player_compute_path"]
