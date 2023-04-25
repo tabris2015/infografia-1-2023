@@ -2,8 +2,8 @@ extends KinematicBody2D
 
 signal compute_path(start_position, target_position)
 
-var speed = 60
-var accel = 130
+export var speed = 60
+export var accel = 130
 var velocity = Vector2.ZERO
 var path = PoolVector2Array()
 var next_position = 0
@@ -44,3 +44,15 @@ func _on_Main_send_path(new_path):
 	path = new_path
 	next_position = 0
 
+
+
+func _on_Map_send_path(new_path):
+	print("received path:", new_path)
+	path = new_path
+	next_position = 0
+
+
+func _on_Map2_send_path(new_path):
+	print("received path:", new_path)
+	path = new_path
+	next_position = 0
