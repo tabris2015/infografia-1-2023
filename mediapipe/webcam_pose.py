@@ -27,8 +27,8 @@ while cap.isOpened():
 
     # convertir a BGR de nuevo
     img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
-
-    # print(prediction.pose_landmarks)
+    if prediction.pose_landmarks.landmark[0]:
+        print(f"Rostro: {prediction.pose_landmarks.landmark[0]}")
     # dibujar resultados en la imagen
     if prediction.pose_landmarks:
         mp_drawing.draw_landmarks(
